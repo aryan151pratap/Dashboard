@@ -1,0 +1,60 @@
+import { useState } from "react";
+
+function Filter({ collection }){
+
+	console.log(collection)
+
+	const [filter, setFilter] = useState('');
+
+	function getAllKeys(obj, prefix = '') {
+	let keys = [];
+	for (const key in obj) {
+		const fullKey = prefix ? `${prefix}.${key}` : key;
+		keys.push(fullKey);
+		if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+		keys = keys.concat(getAllKeys(obj[key], fullKey));
+		} else if (Array.isArray(obj[key])) {
+		obj[key].forEach((item, index) => {
+			if (typeof item === 'object' && item !== null) {
+			keys = keys.concat(getAllKeys(item, `${fullKey}[${index}]`));
+			}
+		});
+		}
+	}
+	return keys;
+	}
+
+	const allKeys = new Set();
+	collection.data.forEach(obj => {
+		getAllKeys(obj).forEach(k => allKeys.add(k));
+	});
+
+	console.log(allKeys);
+	
+	return(
+		<>
+		<div className="w-full flex p-2">
+			<div className="w-full flex flex-col sm:flex-row gap-2">
+				<select name="" id=""
+					className="outline-none bg-zinc-200 p-2"
+				>
+					<option value="">choose</option>
+					{[...allKeys].map((i, index) => (
+						<option key={index} value="">{i}</option>
+					))}
+				</select>
+
+				<input type="text" 
+					value={filter}
+					onChange={(e) => setFilter(e.target.value)}
+					className="w-full sm:w-md p-2 outline-none bg-zinc-200 ml-auto"
+					placeholder="Enter for search..."
+				/>
+			</div>
+			
+		</div>
+		</>
+	)
+}
+
+export default Filter;
