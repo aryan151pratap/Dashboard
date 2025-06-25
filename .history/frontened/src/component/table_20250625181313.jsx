@@ -40,7 +40,7 @@ function Table({ collection }) {
                     className="max-h-[300px] min-h-[100px] border border-gray-300 px-4 py-2 overflow-auto"
                   >
                     {typeof value === "object" ? 
-                      <pre className="">
+                      <pre className="w-[300px] h-[50px]">
                         {JSON.stringify(value, null, 2)}
                       </pre>
                       : 

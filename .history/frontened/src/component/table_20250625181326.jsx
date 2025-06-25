@@ -37,7 +37,7 @@ function Table({ collection }) {
                 return (
                   <td
                     key={colIndex}
-                    className="max-h-[300px] min-h-[100px] border border-gray-300 px-4 py-2 overflow-auto"
+                    className="max-h-[400px] min-h-[100px] border border-gray-300 px-4 py-2 overflow-auto"
                   >
                     {typeof value === "object" ? 
                       <pre className="">
