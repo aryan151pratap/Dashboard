@@ -30,7 +30,7 @@ function Connect({ setConnected, setShowModal, setCluster }){
 				})
 
 				const result = await res.json();
-				console.log(result);
+				console.log(result.data);
 				setCluster(result.data);
 				if(result.ok){
 					setConnected('connected');

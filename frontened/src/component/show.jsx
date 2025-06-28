@@ -115,7 +115,7 @@ function DataShowcaseOptions({ data }) {
 				) : 
 					<div>
 						{data.map((i, index) => (
-							<pre key={index} className="bg-black text-green-400 p-4 rounded overflow-x-auto text-sm">
+							<pre key={index} className="bg-white text-green-800 p-4 rounded overflow-x-auto text-sm">
 								{JSON.stringify(i, null, 2)}
 							</pre>
 						))}

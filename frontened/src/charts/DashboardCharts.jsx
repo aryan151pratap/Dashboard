@@ -60,6 +60,10 @@ function DynamicChart({ data }) {
 
 	// Limit pie to one key
 	useEffect(() => {
+		setSelectedKeys(numericKeys);
+	},[]);
+	
+	useEffect(() => {
 		if (chartType === "pie" && selectedKeys.length > 1) {
 			setSelectedKeys([selectedKeys[0]]);
 		}

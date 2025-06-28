@@ -15,7 +15,7 @@ function Dashboard({ cluster }){
 			</div>
 
 			<div className="w-full overflow-auto">
-				<Right_bar collection={collection}/>
+				<Right_bar collection={collection} dbs={cluster}/>
 			</div>
 			
 		</div>

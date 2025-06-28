@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import Table from "../component/table";
 import Search from "../component/search";
 import Filter from "../component/filter";
+import ClusterDashboard from "../component/clusterDashboard";
 
-function Right_bar({ collection }){
-
-	const [tab, setTab] = useState(['json', 'table', 'filter']);
-	const [current_tab, setCurrrent_tab] = useState('json');
+function Right_bar({ collection, dbs }){
+	const [tab, setTab] = useState(['cluster', 'json', 'table', 'filter']);
+	const [current_tab, setCurrrent_tab] = useState('cluster');
 
 	useEffect(() => {
-		setCurrrent_tab('json');
+		setCurrrent_tab('cluster');
 	},[collection])
 
 	return(
 		<>
-		<div className="w-full sm:pt-14 p-2 sm:p-4">
+		<div className="w-full sm:pt-14 p-2">
 			<h1 className="text-xl font-bold mb-2 text-zinc-700">Dashboard Output</h1>
 			
 			{collection &&
@@ -61,33 +61,53 @@ function Right_bar({ collection }){
 
 				
 				<div className="overflow-x-auto">
-			
-					{collection?.data.length > 0 ?
-						<div className="">
-							{current_tab === 'table' ?
-							<div>
-								<Table collection={collection.data}/>
+					{dbs?.databases?.length > 0 && current_tab === 'cluster' ?
+						<div>
+							<ClusterDashboard clusterData={dbs}/>
+						</div>
+						:
+						<div>
+							{collection?.data.length > 0 ?
+								<div className="">
+									{current_tab === 'table' ?
+									<div>
+										<Table collection={collection.data}/>
+									</div>	
+									:
+									current_tab === 'filter' ?
+									<div>
+										<Filter collection={collection}/>
+									</div>
+									
+									:	
+										<div className="h-[80vh] overflow-y-auto">
+											{collection.data.map((i, index) => (
+											<pre
+												key={index}
+												className="bg-gray-800 text-green-400 p-4 overflow-x-auto text-sm"
+											>
+												{JSON.stringify(i, null, 2)}
+											</pre>
+											))}
+										</div>
+									}
 							</div>	
-							:
-							current_tab === 'filter' ?
-							<div>
-								<Filter collection={collection}/>
+							:		
+							<div className="p-2">
+								{dbs?.ok === 1 ?
+									<div>
+										<p>Welcome to Mongo Dashboard</p>
+										<p>Select collection to monitoring the data</p>
+									</div>
+									:
+									<div>
+										<p>Welcome to Mongo Dashboard</p>
+										<p>Connect to a MongoDB URI to begin monitoring data.</p>
+									</div>
+								}
 							</div>
-							:	
-								<div>
-									{collection.data.map((i, index) => (
-										<pre key={index} className="bg-black text-green-400 p-4 rounded overflow-x-auto text-sm">
-											{JSON.stringify(i, null, 2)}
-										</pre>
-									))}
-								</div>
 							}
-					</div>	
-					:			
-					<div className="p-2">
-						<p>Welcome to Mongo Dashboard</p>
-						<p>Connect to a MongoDB URI to begin monitoring data.</p>
-					</div>
+						</div>
 					}
 				</div>
 			</div>

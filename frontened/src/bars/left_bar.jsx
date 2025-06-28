@@ -18,6 +18,7 @@ function Left_bar({ setCollection, cluster }){
 			uri: cluster.uri,
 			database: current_database.name,
 			collection: i,
+			dbs: cluster.dbs
 		}
 		try{
 			setLoading(true);

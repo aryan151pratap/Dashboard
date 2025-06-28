@@ -19,8 +19,9 @@ router.post("/", async (req, res) => {
 
     const clusterData = {
       name: "Custom Cluster",
-	  uri,
+	    uri,
       databases: [],
+      dbs,
     };
 
     for (const dbInfo of dbs.databases) {
@@ -29,17 +30,18 @@ router.post("/", async (req, res) => {
 
       clusterData.databases.push({
         name: dbInfo.name,
+        disk_size: dbInfo.sizeOnDisk,
         collections: collections.map((col) => col.name),
       });
     }
 
     await client.close();
-	console.log(clusterData);
+	  console.log(clusterData);
 
     res.status(200).json({
-		ok: true,
-		data: clusterData,
-	});
+      ok: true,
+      data: clusterData,
+    });
 
   } catch (err) {
     res.status(500).json({ 
